@@ -1,5 +1,8 @@
 package christmas
 
 fun main() {
-    TODO("프로그램 구현")
+    val input=eventView.Input()
+    input.printlnVisitDate()
+    input.dateErrorPrintln()
+
 }

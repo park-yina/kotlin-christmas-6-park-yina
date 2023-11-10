@@ -38,6 +38,13 @@ class ApplicationTest : NsTest() {
             assertThat(output()).contains("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.")
         }
     }
+    @Test
+    fun `숫자 범위 초과 날짜 테스트`(){
+        assertSimpleTest {
+            runException("32")
+            assertThat(output()).contains("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.")
+        }
+    }
 
     @Test
     fun `주문 예외 테스트`() {
