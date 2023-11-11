@@ -23,5 +23,19 @@ class Input {
     fun printlnOrderMenu(){
         println(InputMent.ORDER_MENU_MENT.message)
     }
+    fun menuErrorPrintln(){
+        try{
+            validInput.checking_InputData()
+        }
+        catch (e:IllegalArgumentException){
+            println(e.message)
+            return validInput.checking_InputData()
+        }
+        printlnBenefitPreview()
+    }
+
+    fun printlnBenefitPreview(){
+        println(InputMent.BENEFIT_PREVIEW.message)
+    }
     
 }

@@ -53,6 +53,13 @@ class ApplicationTest : NsTest() {
             assertThat(output()).contains("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.")
         }
     }
+    @Test
+    fun `주문 양식 틀림`(){
+        assertSimpleTest {
+            runException("3","제로콜라a")
+            assertThat(output()).contains("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.")
+        }
+    }
 
     override fun runMain() {
         main()
