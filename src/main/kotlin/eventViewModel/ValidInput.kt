@@ -50,6 +50,9 @@ class ValidInput {
             if (input.count { item -> item.split("-")[0].equals(key) } > 1) {
                 throw IllegalArgumentException(ErrorMessage.DUPLICATE_MENU.message)
             }
+            if(menu.none{(_,items)->items.any{it.first==key}}){
+                throw IllegalArgumentException(ErrorMessage.INVALID_MENU_FORM.message)
+            }
 
             if (value.toIntOrNull() == null) {
                 throw IllegalArgumentException(ErrorMessage.INVALID_MENU_FORM.message)
