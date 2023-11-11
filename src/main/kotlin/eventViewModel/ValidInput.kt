@@ -9,7 +9,7 @@ import eventView.Output
 class ValidInput {
     val menuMap= mutableMapOf<String,Int>()
     companion object {
-        private val menu = mapOf(
+        val menu = mapOf(
             "애피타이저" to listOf(Pair("양송이 수프", 6000), Pair("티파스", 5000), Pair("시저샐러드", 8000)),
             "메인" to listOf(
                 Pair("티본스테이크", 55000),
@@ -73,7 +73,4 @@ class ValidInput {
         Output().printlnOrderMenu()
         Output().printlnOrderMenuList(menuMap)
     }
-    //fun getMenuMap():MutableMap<String, Int> {
-        //return menuMap
-   // }
 }
