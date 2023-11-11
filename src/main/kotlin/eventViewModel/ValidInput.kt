@@ -4,7 +4,6 @@ import camp.nextstep.edu.missionutils.Console
 import eventView.ErrorMessage
 import eventView.Input
 import eventView.Output
-import net.bytebuddy.pool.TypePool.Resolution.Illegal
 
 
 class ValidInput {
@@ -64,6 +63,9 @@ class ValidInput {
             if (input.all { it.split("-")[0] in menu["음료"]!!.map { it.first } }) {
                 throw IllegalArgumentException(ErrorMessage.INVALID_MENU_FORM.message)
             }
+            if (input.sumBy { it.split("-")[1].toInt() } > 20) {
+                throw IllegalArgumentException(ErrorMessage.OVER_MENU.message)
+            }
             menuMap[key] = value.toInt()
         }
     }
@@ -71,4 +73,7 @@ class ValidInput {
         Output().printlnOrderMenu()
         Output().printlnOrderMenuList(menuMap)
     }
+    //fun getMenuMap():MutableMap<String, Int> {
+        //return menuMap
+   // }
 }
