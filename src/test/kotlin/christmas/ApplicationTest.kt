@@ -67,6 +67,13 @@ class ApplicationTest : NsTest() {
             assertThat(output()).contains("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.")
         }
     }
+    @Test
+    fun `음료로만 이루어진 주문`(){
+        assertSimpleTest {
+            runException("5","샴페인-2")
+            assertThat(output()).contains("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.")
+        }
+    }
 
     override fun runMain() {
         main()
