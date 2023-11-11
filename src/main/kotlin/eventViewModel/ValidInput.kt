@@ -2,16 +2,20 @@ package eventViewModel
 
 import camp.nextstep.edu.missionutils.Console
 import eventView.ErrorMessage
+import eventView.Input
+import eventView.Output
 import net.bytebuddy.pool.TypePool.Resolution.Illegal
 
+
 class ValidInput {
+    val menuMap= mutableMapOf<String,Int>()
     companion object {
         private val menu = mapOf(
             "애피타이저" to listOf(Pair("양송이 수프", 6000), Pair("티파스", 5000), Pair("시저샐러드", 8000)),
             "메인" to listOf(
                 Pair("티본스테이크", 55000),
                 Pair("바비큐립", 54000),
-                Pair("해물파스타", 35000),
+                Pair("해산물파스타", 35000),
                 Pair("크리스마스파스타", 25000)
             ),
             "디저트" to listOf(Pair("초코케이크", 15000), Pair("아이스크림", 5000)),
@@ -31,7 +35,7 @@ class ValidInput {
                 throw IllegalArgumentException(ErrorMessage.INVALID_DATE.message)
             }
         }
-        eventView.Input().printlnOrderMenu()
+       Input().printlnOrderMenu()
     }
 
     fun pharsing_InputData(): List<String> {
@@ -39,7 +43,7 @@ class ValidInput {
         return inputMenu.split(",")
     }
 
-    fun checking_InputData() {
+    fun checking_InputData(){
         val input = pharsing_InputData()
         input.forEach {
             if (!it.contains("-")) {
@@ -60,7 +64,11 @@ class ValidInput {
             if (input.all { it.split("-")[0] in menu["음료"]!!.map { it.first } }) {
                 throw IllegalArgumentException(ErrorMessage.INVALID_MENU_FORM.message)
             }
-
+            menuMap[key] = value.toInt()
         }
+    }
+    fun printlnInPutMenu(){
+        Output().printlnOrderMenu()
+        Output().printlnOrderMenuList(menuMap)
     }
 }

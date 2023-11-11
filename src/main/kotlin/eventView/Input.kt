@@ -1,17 +1,18 @@
 package eventView
 
-import camp.nextstep.edu.missionutils.Console
 import eventViewModel.ValidInput
 
 class Input {
-    init{
+    val validInput=ValidInput()
+    private fun HelloMent(){
         println(InputMent.HELLO_USER.message)
     }
-    val validInput=ValidInput()
-    fun printlnVisitDate(){
+    private fun printlnVisitDate(){
         println(InputMent.READ_EXPECTED_VISIT_DATE.message)
     }
     fun dateErrorPrintln(){
+        HelloMent()
+        printlnVisitDate()
         try{
             validInput.date_Verification()
         }
@@ -32,10 +33,11 @@ class Input {
             return validInput.checking_InputData()
         }
         printlnBenefitPreview()
+        validInput.printlnInPutMenu()
     }
 
     fun printlnBenefitPreview(){
         println(InputMent.BENEFIT_PREVIEW.message)
     }
-    
+
 }
