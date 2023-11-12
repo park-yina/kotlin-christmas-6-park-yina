@@ -12,6 +12,7 @@ class ValidInput {
     private var benefitPrice=0
     var giveway=false
     var inputDay=0
+    private var benefitList= mutableListOf<String>()
 
     companion object {
         val menu = mapOf(
@@ -96,17 +97,15 @@ class ValidInput {
     }
     fun calculateGivewayBenefit(){
         giveway=Output().printlnGiveWayResult(totalPrice)
-        Output().printlnBenefitList()
         if(giveway){
-           println("증정 이벤트: -25,000원")
+            benefitList.add("증정 이벤트: -25,000원")
             benefitPrice+=25000
         }
-        startDays()
-    }
-    private fun startDays(){
-        if(startDays.contains(inputDay)){
-            println("특별 할인: -1,000원")
+        val getStar=Output().startDays(inputDay, startDays)
+        if(getStar){
+            benefitList.add("특별 할인: -1,000원")
             benefitPrice+=1000
         }
+        Output().printlnBenefitList(benefitList)
     }
 }

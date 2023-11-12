@@ -28,7 +28,22 @@ class Output {
         println("없음")
         return false
     }
-   fun printlnBenefitList(){
+   private fun printlnBenefitMent(){
         println(OutputMent.BENEFIT_LIST.message)
+    }
+    fun startDays(date:Int,starDays:List<Int>):Boolean{
+        if(starDays.contains(date)){
+            return true
+        }
+        return false
+    }
+    fun printlnBenefitList(benefitList:List<String>):Boolean{
+        printlnBenefitMent()
+        if(benefitList.isNullOrEmpty()){
+            println("없음")
+            return false
+        }
+        benefitList.forEach { println(it)}
+        return true
     }
 }
