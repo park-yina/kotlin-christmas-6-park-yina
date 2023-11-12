@@ -11,6 +11,7 @@ class ValidInput {
     private var totalPrice=0
     private var benefitPrice=0
     var giveway=false
+    var inputDay=0
 
     companion object {
         val menu = mapOf(
@@ -24,6 +25,7 @@ class ValidInput {
             "디저트" to listOf(Pair("초코케이크", 15000), Pair("아이스크림", 5000)),
             "음료" to listOf(Pair("제로콜라", 3000), Pair("레드와인", 60000), Pair("샴페인", 25000))
         )
+        val startDays= listOf<Int>(3,10,17,24,25,31)
 
     }
 
@@ -39,9 +41,9 @@ class ValidInput {
             }
         }
         Input().printlnOrderMenu()
-        return date.toInt()
+         inputDay=date.toInt()
+        return inputDay
     }
-
     fun pharsing_InputData(): List<String> {
         val inputMenu = Console.readLine()
         return inputMenu.split(",")
@@ -92,12 +94,19 @@ class ValidInput {
         Output().printlnTotalPrice(totalPrice)
         return totalPrice
     }
-    fun calculateBenefit(){
+    fun calculateGivewayBenefit(){
         giveway=Output().printlnGiveWayResult(totalPrice)
         Output().printlnBenefitList()
         if(giveway){
            println("증정 이벤트: -25,000원")
             benefitPrice+=25000
+        }
+        startDays()
+    }
+    private fun startDays(){
+        if(startDays.contains(inputDay)){
+            println("특별 할인: -1,000원")
+            benefitPrice+=1000
         }
     }
 }
