@@ -10,16 +10,18 @@ class Input {
     private fun printlnVisitDate(){
         println(InputMent.READ_EXPECTED_VISIT_DATE.message)
     }
-    fun dateErrorPrintln(){
+    fun dateErrorPrintln():Int{
         HelloMent()
         printlnVisitDate()
+        val date:Int
         try{
-            validInput.date_Verification()
+            date=validInput.date_Verification()
         }
         catch (e:IllegalArgumentException){
             println(e.message)
             return validInput.date_Verification()
         }
+        return date
     }
     fun printlnOrderMenu(){
         println(InputMent.ORDER_MENU_MENT.message)
@@ -34,6 +36,7 @@ class Input {
         }
         printlnBenefitPreview()
         validInput.printlnInPutMenu()
+        validInput.originalPrice()
     }
 
     fun printlnBenefitPreview(){

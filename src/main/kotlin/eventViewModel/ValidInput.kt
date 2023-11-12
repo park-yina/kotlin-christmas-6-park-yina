@@ -23,7 +23,7 @@ class ValidInput {
 
     }
 
-    fun date_Verification() {
+    fun date_Verification():Int{
         val date = Console.readLine()
         when {
             date.toIntOrNull() == null -> {
@@ -34,7 +34,8 @@ class ValidInput {
                 throw IllegalArgumentException(ErrorMessage.INVALID_DATE.message)
             }
         }
-       Input().printlnOrderMenu()
+        Input().printlnOrderMenu()
+        return date.toInt()
     }
 
     fun pharsing_InputData(): List<String> {
@@ -72,5 +73,20 @@ class ValidInput {
     fun printlnInPutMenu(){
         Output().printlnOrderMenu()
         Output().printlnOrderMenuList(menuMap)
+    }
+    fun originalPrice():Int{
+        var totalPrice=0
+        menuMap.forEach { (menuItem,quantity)->
+            val item=menu.entries.find{(_,items)->items.any{it.first==menuItem}}
+            if(item!=null){
+                val price=item.value.find{it.first==menuItem}?.second
+                if(price!=null){
+                   totalPrice+=price*quantity
+                }
+            }
+        }
+        Output().printlnBeforeBenefit()
+        Output().printlnTotalPrice(totalPrice)
+        return totalPrice
     }
 }
