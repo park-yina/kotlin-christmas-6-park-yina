@@ -37,6 +37,7 @@ class Input {
         printlnBenefitPreview()
         validInput.printlnInPutMenu()
         validInput.originalPrice()
+        validInput.calculateBenefit()
     }
 
     fun printlnBenefitPreview(){

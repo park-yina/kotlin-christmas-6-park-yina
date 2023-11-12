@@ -7,7 +7,11 @@ import eventView.Output
 
 
 class ValidInput {
-    val menuMap= mutableMapOf<String,Int>()
+    private val menuMap= mutableMapOf<String,Int>()
+    private var totalPrice=0
+    private var benefitPrice=0
+    var giveway=false
+
     companion object {
         val menu = mapOf(
             "애피타이저" to listOf(Pair("양송이 수프", 6000), Pair("티파스", 5000), Pair("시저샐러드", 8000)),
@@ -75,7 +79,6 @@ class ValidInput {
         Output().printlnOrderMenuList(menuMap)
     }
     fun originalPrice():Int{
-        var totalPrice=0
         menuMap.forEach { (menuItem,quantity)->
             val item=menu.entries.find{(_,items)->items.any{it.first==menuItem}}
             if(item!=null){
@@ -88,5 +91,13 @@ class ValidInput {
         Output().printlnBeforeBenefit()
         Output().printlnTotalPrice(totalPrice)
         return totalPrice
+    }
+    fun calculateBenefit(){
+        giveway=Output().printlnGiveWayResult(totalPrice)
+        Output().printlnBenefitList()
+        if(giveway){
+           println("증정 이벤트: -25,000원")
+            benefitPrice+=25000
+        }
     }
 }
