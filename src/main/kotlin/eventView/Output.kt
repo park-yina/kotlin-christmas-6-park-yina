@@ -37,6 +37,11 @@ class Output {
         }
         return false
     }
+    fun checkingDayType(date:Int,weekEnd:List<Int>):Boolean{
+        if(weekEnd.contains(date))
+            return true
+        return false
+    }
     fun printlnBenefitList(benefitList:List<String>):Boolean{
         printlnBenefitMent()
         if(benefitList.isNullOrEmpty()){
@@ -45,5 +50,9 @@ class Output {
         }
         benefitList.forEach { println(it)}
         return true
+    }
+    fun printlnAllBenefitCost(benefitCost:Int){
+        println(OutputMent.BENEFIT_COST.message)
+        println("-${benefitCost}원")
     }
 }

@@ -11,7 +11,11 @@ class ValidInput {
     private var totalPrice=0
     private var benefitPrice=0
     var giveway=false
+    private var dayDiscount=2023
     var inputDay=0
+    var dayType=false
+    var weekEndDiscount=0
+    var workdayDisount=0
     private var benefitList= mutableListOf<String>()
 
     companion object {
@@ -26,7 +30,8 @@ class ValidInput {
             "디저트" to listOf(Pair("초코케이크", 15000), Pair("아이스크림", 5000)),
             "음료" to listOf(Pair("제로콜라", 3000), Pair("레드와인", 60000), Pair("샴페인", 25000))
         )
-        val startDays= listOf<Int>(3,10,17,24,25,31)
+        val starDays= listOf<Int>(3,10,17,24,25,31)
+        val weekEnd=listOf(1,2,8,9,15,16,22,23,29,30)
 
     }
 
@@ -95,17 +100,56 @@ class ValidInput {
         Output().printlnTotalPrice(totalPrice)
         return totalPrice
     }
+
+    fun calculateWeekEndDiscount(){
+        menuMap.forEach { (menuItem, quantity) ->
+            run {
+                val item = menu.entries.find { (_, items) -> items.any { it.first == menuItem } }
+                if (item?.key == "메인") {
+                    benefitPrice += dayDiscount * quantity
+                    weekEndDiscount+=dayDiscount*quantity
+                }
+            }
+        }
+    }
+    fun calculateWorkDayDiscount(){
+        menuMap.forEach { (menuItem, quantity) ->
+            run {
+                val item = menu.entries.find { (_, items) -> items.any { it.first == menuItem } }
+                if (item?.key == "디저트") {
+                    benefitPrice += dayDiscount * quantity
+                   workdayDisount+=dayDiscount*quantity
+                }
+            }
+        }
+    }
     fun calculateGivewayBenefit(){
         giveway=Output().printlnGiveWayResult(totalPrice)
         if(giveway){
             benefitList.add("증정 이벤트: -25,000원")
             benefitPrice+=25000
         }
-        val getStar=Output().startDays(inputDay, startDays)
+        val getStar=Output().startDays(inputDay, starDays)
         if(getStar){
             benefitList.add("특별 할인: -1,000원")
             benefitPrice+=1000
         }
+        dayType=Output().checkingDayType(inputDay, weekEnd)
+            if(dayType){
+                calculateWeekEndDiscount()
+                if(weekEndDiscount!=0){
+                    benefitList.add("주말 할인 : -${weekEndDiscount}원")
+                }
+            }
+        if(!dayType){
+            calculateWorkDayDiscount()
+            if(workdayDisount!=0){
+                benefitList.add("평일 할인 : -${workdayDisount}원")
+            }
+        }
         Output().printlnBenefitList(benefitList)
+    }
+    fun allBenefitCost(){
+        Output().printlnAllBenefitCost(benefitPrice)
     }
 }
