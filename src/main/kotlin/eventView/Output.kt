@@ -53,6 +53,6 @@ class Output {
     }
     fun printlnAllBenefitCost(benefitCost:Int){
         println(OutputMent.BENEFIT_COST.message)
-        println("-${benefitCost}원")
+        println(String.format("-%,d원", Math.abs(benefitCost)))
     }
 }

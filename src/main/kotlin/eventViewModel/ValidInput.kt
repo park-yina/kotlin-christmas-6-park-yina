@@ -17,6 +17,7 @@ class ValidInput {
     var weekEndDiscount=0
     var workdayDisount=0
     private var benefitList= mutableListOf<String>()
+    private var d_DayDiscount=0
 
     companion object {
         val menu = mapOf(
@@ -138,16 +139,32 @@ class ValidInput {
             if(dayType){
                 calculateWeekEndDiscount()
                 if(weekEndDiscount!=0){
-                    benefitList.add("주말 할인 : -${weekEndDiscount}원")
+                    val formattedDiscount = String.format("주말 할인 : -%,d원", Math.abs(weekEndDiscount))
+                    benefitList.add(formattedDiscount)
                 }
             }
         if(!dayType){
             calculateWorkDayDiscount()
             if(workdayDisount!=0){
-                benefitList.add("평일 할인 : -${workdayDisount}원")
+                val formattedDiscount = String.format("평일 할인 : -%,d원", Math.abs(workdayDisount))
+                benefitList.add(formattedDiscount)
             }
         }
+        if(inputDay<=25){
+            christmasDiscount()
+            val formattedDiscount = String.format("크리스마스 디데이 할인: -%,d원", Math.abs(d_DayDiscount))
+            benefitList.add(formattedDiscount)
+        }
         Output().printlnBenefitList(benefitList)
+    }
+    fun christmasDiscount(){
+        val startPay=3400
+        var dayCount=25-inputDay
+        if(dayCount==0)
+            d_DayDiscount=startPay
+        if(dayCount!=0)
+            d_DayDiscount=startPay-(dayCount*100)
+        benefitPrice+=d_DayDiscount
     }
     fun allBenefitCost(){
         Output().printlnAllBenefitCost(benefitPrice)
