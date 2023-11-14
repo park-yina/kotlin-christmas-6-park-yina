@@ -8,4 +8,7 @@ enum class OutputMent(val message: String) {
     BENEFIT_COST("<총혜택 금액>"),
     FINAL_AMOUNT("<할인 후 예상 결제 금액>"),
     BADGE("<12월 이벤트 배지>"),
+    SERVICE_CHANPAGNE("샴페인 1개"),
+    NO_ONE("없음"),
+    WON("%,d원"),
 }

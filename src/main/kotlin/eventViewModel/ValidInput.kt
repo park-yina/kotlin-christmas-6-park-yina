@@ -1,9 +1,11 @@
 package eventViewModel
 
 import camp.nextstep.edu.missionutils.Console
+import eventView.DiscountPrice
 import eventView.ErrorMessage
 import eventView.Input
 import eventView.Output
+import eventView.ValidInputDatas
 
 
 class ValidInput {
@@ -31,7 +33,7 @@ class ValidInput {
             "디저트" to listOf(Pair("초코케이크", 15000), Pair("아이스크림", 5000)),
             "음료" to listOf(Pair("제로콜라", 3000), Pair("레드와인", 60000), Pair("샴페인", 25000))
         )
-        val starDays= listOf<Int>(3,10,17,24,25,31)
+        val starDays= listOf(3,10,17,24,25,31)
         val weekEnd=listOf(1,2,8,9,15,16,22,23,29,30)
 
     }
@@ -43,7 +45,7 @@ class ValidInput {
                 throw IllegalArgumentException(ErrorMessage.INVALID_DATE.message)
             }
 
-            date.toInt() < 1 || date.toInt() > 31 -> {
+            date.toInt() < ValidInputDatas.VALID_DATE_START.data || date.toInt() > ValidInputDatas.VALID_DATE_END.data -> {
                 throw IllegalArgumentException(ErrorMessage.INVALID_DATE.message)
             }
         }

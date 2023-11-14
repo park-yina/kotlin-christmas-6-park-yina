@@ -3,7 +3,6 @@ package eventView
 import eventViewModel.ValidInput
 
 class Output {
-    private val validInput=ValidInput()
     fun printlnOrderMenu(){
         println(OutputMent.ORDER_MENU.message)
     }
@@ -14,18 +13,18 @@ class Output {
         println(OutputMent.BEFORE_BENEFIT.message)
     }
     fun printlnTotalPrice(totalPrice:Int){
-        println("${totalPrice}원")
+        println(OutputMent.WON.message.format(totalPrice))
     }
     private fun printlnGivewayMenu(){
         println(OutputMent.GIVEWAY_MENU.message)
     }
     fun printlnGiveWayResult(totalPrice: Int):Boolean{
         printlnGivewayMenu()
-        if(totalPrice>=120000){
-            println("샴페인 1개")
+        if(totalPrice>=DiscountPrice.CHANPAGNE_FREE.price){
+            println(OutputMent.SERVICE_CHANPAGNE.message)
             return true
         }
-        println("없음")
+        println(OutputMent.NO_ONE.message)
         return false
     }
    private fun printlnBenefitMent(){
@@ -45,7 +44,7 @@ class Output {
     fun printlnBenefitList(benefitList:List<String>):Boolean{
         printlnBenefitMent()
         if(benefitList.isNullOrEmpty()){
-            println("없음")
+            println(OutputMent.NO_ONE.message)
             return false
         }
         benefitList.forEach { println(it)}
@@ -60,7 +59,7 @@ class Output {
     }
     fun printlnResult(resultCost:Int){
         printlnDiscountMent()
-        println(String.format("%,d원", Math.abs(resultCost)))
+        println(OutputMent.WON.message.format(resultCost))
     }
     private fun printlnBadgeMent(){
         println(OutputMent.BADGE.message)
@@ -68,10 +67,10 @@ class Output {
     fun printlnBadge(benefitCost:Int){
         printlnBadgeMent()
         when{
-            benefitCost in 5000..9999 ->{println("별")}
-            benefitCost in 10000..19999->println("트리")
-            benefitCost>=20000 ->{println("산타")}
-            else->println("없음")
+            benefitCost in DiscountPrice.STAR_START.price..DiscountPrice.START_END.price ->{println("별")}
+            benefitCost in DiscountPrice.TREE_START.price..DiscountPrice.TREE_END.price->println("트리")
+            benefitCost>=DiscountPrice.SANTA_START.price->{println("산타")}
+            else->println(OutputMent.NO_ONE.message)
         }
     }
 }
