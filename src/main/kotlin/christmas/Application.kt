@@ -1,7 +1,5 @@
 package christmas
 
-import eventView.Output
-import eventViewModel.Calculator
 import eventViewModel.ValidInput
 
 fun main() {

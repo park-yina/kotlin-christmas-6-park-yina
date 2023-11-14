@@ -21,7 +21,7 @@ class ValidInput {
 
     companion object {
         val menu = mapOf(
-            "애피타이저" to listOf(Pair("양송이 수프", 6000), Pair("티파스", 5000), Pair("시저샐러드", 8000)),
+            "애피타이저" to listOf(Pair("양송이 수프", 6000), Pair("타파스", 5000), Pair("시저샐러드", 8000)),
             "메인" to listOf(
                 Pair("티본스테이크", 55000),
                 Pair("바비큐립", 54000),
