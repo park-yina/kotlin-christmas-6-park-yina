@@ -169,4 +169,12 @@ class ValidInput {
     fun allBenefitCost(){
         Output().printlnAllBenefitCost(benefitPrice)
     }
+    fun resultBenefit(){
+        var result=totalPrice-benefitPrice
+        if(benefitList.contains("증정 이벤트: -25,000원")) {
+            result+=25000
+        }
+        Output().printlnResult(result)
+        Output().printlnBadge(benefitPrice)
+    }
 }

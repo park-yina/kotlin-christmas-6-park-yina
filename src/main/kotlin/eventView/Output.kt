@@ -55,4 +55,23 @@ class Output {
         println(OutputMent.BENEFIT_COST.message)
         println(String.format("-%,d원", Math.abs(benefitCost)))
     }
+    private fun printlnDiscountMent(){
+        println(OutputMent.FINAL_AMOUNT.message)
+    }
+    fun printlnResult(resultCost:Int){
+        printlnDiscountMent()
+        println(String.format("%,d원", Math.abs(resultCost)))
+    }
+    private fun printlnBadgeMent(){
+        println(OutputMent.BADGE.message)
+    }
+    fun printlnBadge(benefitCost:Int){
+        printlnBadgeMent()
+        when{
+            benefitCost in 5000..9999 ->{println("별")}
+            benefitCost in 10000..19999->println("트리")
+            benefitCost>=20000 ->{println("산타")}
+            else->println("없음")
+        }
+    }
 }

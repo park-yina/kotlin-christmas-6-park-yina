@@ -39,6 +39,7 @@ class Input {
         validInput.originalPrice()
         validInput.calculateGivewayBenefit()
         validInput.allBenefitCost()
+        validInput.resultBenefit()
     }
 
     fun printlnBenefitPreview(){
