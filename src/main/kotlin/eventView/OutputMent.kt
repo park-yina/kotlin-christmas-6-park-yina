@@ -11,4 +11,5 @@ enum class OutputMent(val message: String) {
     SERVICE_CHANPAGNE("샴페인 1개"),
     NO_ONE("없음"),
     WON("%,d원"),
+    MINUS_WON("-%,d원")
 }

@@ -3,6 +3,11 @@ package eventView
 import eventViewModel.ValidInput
 
 class Output {
+    companion object {
+        val star="별"
+        val tree="트리"
+        val santa="산타"
+    }
     fun printlnOrderMenu(){
         println(OutputMent.ORDER_MENU.message)
     }
@@ -52,7 +57,7 @@ class Output {
     }
     fun printlnAllBenefitCost(benefitCost:Int){
         println(OutputMent.BENEFIT_COST.message)
-        println(String.format("-%,d원", Math.abs(benefitCost)))
+        println(OutputMent.MINUS_WON.message.format(benefitCost))
     }
     private fun printlnDiscountMent(){
         println(OutputMent.FINAL_AMOUNT.message)
@@ -67,9 +72,9 @@ class Output {
     fun printlnBadge(benefitCost:Int){
         printlnBadgeMent()
         when{
-            benefitCost in DiscountPrice.STAR_START.price..DiscountPrice.START_END.price ->{println("별")}
-            benefitCost in DiscountPrice.TREE_START.price..DiscountPrice.TREE_END.price->println("트리")
-            benefitCost>=DiscountPrice.SANTA_START.price->{println("산타")}
+            benefitCost in DiscountPrice.STAR_START.price..DiscountPrice.START_END.price ->println(star)
+            benefitCost in DiscountPrice.TREE_START.price..DiscountPrice.TREE_END.price->println(tree)
+            benefitCost>=DiscountPrice.SANTA_START.price->println(santa)
             else->println(OutputMent.NO_ONE.message)
         }
     }
