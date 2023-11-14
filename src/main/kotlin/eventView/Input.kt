@@ -45,5 +45,4 @@ class Input {
     fun printlnBenefitPreview(){
         println(InputMent.BENEFIT_PREVIEW.message)
     }
-
 }

@@ -1,8 +1,13 @@
 package eventView
 
 import eventViewModel.ValidInput
+import eventViewModel.ValidInput.Companion.benefitPrice
+import eventViewModel.ValidInput.Companion.menu
+import eventViewModel.ValidInput.Companion.result
+import eventViewModel.ValidInput.Companion.totalPrice
 
 class Output {
+    val validInput=ValidInput()
     companion object {
         val star="별"
         val tree="트리"
@@ -11,19 +16,19 @@ class Output {
     fun printlnOrderMenu(){
         println(OutputMent.ORDER_MENU.message)
     }
-    fun printlnOrderMenuList(menu:MutableMap<String,Int>){
+    fun printlnOrderMenuList(){
         menu.forEach{println("${it.key} ${it.value}개")}
     }
     fun printlnBeforeBenefit(){
         println(OutputMent.BEFORE_BENEFIT.message)
     }
-    fun printlnTotalPrice(totalPrice:Int){
+    fun printlnTotalPrice(){
         println(OutputMent.WON.message.format(totalPrice))
     }
     private fun printlnGivewayMenu(){
         println(OutputMent.GIVEWAY_MENU.message)
     }
-    fun printlnGiveWayResult(totalPrice: Int):Boolean{
+    fun printlnGiveWayResult():Boolean{
         printlnGivewayMenu()
         if(totalPrice>=DiscountPrice.CHANPAGNE_FREE.price){
             println(OutputMent.SERVICE_CHANPAGNE.message)
@@ -55,26 +60,26 @@ class Output {
         benefitList.forEach { println(it)}
         return true
     }
-    fun printlnAllBenefitCost(benefitCost:Int){
+    fun printlnAllBenefitCost(){
         println(OutputMent.BENEFIT_COST.message)
-        println(OutputMent.MINUS_WON.message.format(benefitCost))
+        println(OutputMent.MINUS_WON.message.format(benefitPrice))
     }
     private fun printlnDiscountMent(){
         println(OutputMent.FINAL_AMOUNT.message)
     }
-    fun printlnResult(resultCost:Int){
+    fun printlnResult(){
         printlnDiscountMent()
-        println(OutputMent.WON.message.format(resultCost))
+        println(OutputMent.WON.message.format(result))
     }
     private fun printlnBadgeMent(){
         println(OutputMent.BADGE.message)
     }
-    fun printlnBadge(benefitCost:Int){
+    fun printlnBadge(){
         printlnBadgeMent()
         when{
-            benefitCost in DiscountPrice.STAR_START.price..DiscountPrice.START_END.price ->println(star)
-            benefitCost in DiscountPrice.TREE_START.price..DiscountPrice.TREE_END.price->println(tree)
-            benefitCost>=DiscountPrice.SANTA_START.price->println(santa)
+            benefitPrice in DiscountPrice.STAR_START.price..DiscountPrice.START_END.price ->println(star)
+            benefitPrice in DiscountPrice.TREE_START.price..DiscountPrice.TREE_END.price->println(tree)
+            benefitPrice>=DiscountPrice.SANTA_START.price->println(santa)
             else->println(OutputMent.NO_ONE.message)
         }
     }

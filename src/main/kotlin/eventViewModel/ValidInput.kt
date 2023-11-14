@@ -9,17 +9,6 @@ import eventView.ValidInputDatas
 
 
 class ValidInput {
-    private val menuMap= mutableMapOf<String,Int>()
-    private var totalPrice=0
-    private var benefitPrice=0
-    var giveway=false
-    private var dayDiscount=2023
-    var inputDay=0
-    var dayType=false
-    var weekEndDiscount=0
-    var workdayDisount=0
-    private var benefitList= mutableListOf<String>()
-    private var d_DayDiscount=0
 
     companion object {
         val menu = mapOf(
@@ -35,7 +24,18 @@ class ValidInput {
         )
         val starDays= listOf(3,10,17,24,25,31)
         val weekEnd=listOf(1,2,8,9,15,16,22,23,29,30)
-
+        val menuMap= mutableMapOf<String,Int>()
+        var totalPrice=0
+        var benefitPrice=0
+        var giveway=false
+        var dayDiscount=2023
+        var inputDay=0
+        var dayType=false
+        var weekEndDiscount=0
+        var workdayDisount=0
+        var benefitList= mutableListOf<String>()
+        var d_DayDiscount=0
+        var result=0
     }
 
     fun date_Verification():Int{
@@ -87,7 +87,7 @@ class ValidInput {
     }
     fun printlnInPutMenu(){
         Output().printlnOrderMenu()
-        Output().printlnOrderMenuList(menuMap)
+        Output().printlnOrderMenuList()
     }
     fun originalPrice():Int{
         menuMap.forEach { (menuItem,quantity)->
@@ -100,7 +100,7 @@ class ValidInput {
             }
         }
         Output().printlnBeforeBenefit()
-        Output().printlnTotalPrice(totalPrice)
+        Output().printlnTotalPrice()
         return totalPrice
     }
 
@@ -127,7 +127,7 @@ class ValidInput {
         }
     }
     fun calculateGivewayBenefit(){
-        giveway=Output().printlnGiveWayResult(totalPrice)
+        giveway=Output().printlnGiveWayResult()
         if(giveway){
             benefitList.add("증정 이벤트: -25,000원")
             benefitPrice+=25000
@@ -169,14 +169,14 @@ class ValidInput {
         benefitPrice+=d_DayDiscount
     }
     fun allBenefitCost(){
-        Output().printlnAllBenefitCost(benefitPrice)
+        Output().printlnAllBenefitCost()
     }
     fun resultBenefit(){
-        var result=totalPrice-benefitPrice
+       result=totalPrice-benefitPrice
         if(benefitList.contains("증정 이벤트: -25,000원")) {
             result+=25000
         }
-        Output().printlnResult(result)
-        Output().printlnBadge(benefitPrice)
+        Output().printlnResult()
+        Output().printlnBadge()
     }
 }
