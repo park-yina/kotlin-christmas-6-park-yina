@@ -4,8 +4,7 @@ import eventViewModel.Calculator
 import eventViewModel.ValidInput
 
 class Input {
-    val validInput=ValidInput()
-    val calulator=Calculator()
+    private val validInput=ValidInput()
     private fun HelloMent(){
         println(InputMent.HELLO_USER.message)
     }
@@ -36,15 +35,6 @@ class Input {
             println(e.message)
             return validInput.checking_InputData()
         }
-        printlnBenefitPreview()
-        validInput.printlnInPutMenu()
-        calulator.originalPrice()
-        calulator.calculateGivewayBenefit()
-        calulator.allBenefitCost()
-        calulator.resultBenefit()
     }
 
-    fun printlnBenefitPreview(){
-        println(InputMent.BENEFIT_PREVIEW.message)
-    }
 }

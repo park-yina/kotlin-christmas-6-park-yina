@@ -1,15 +1,19 @@
 package eventViewModel
 
 import eventView.Output
+import eventView.OutputMent
 import eventViewModel.ValidInput.Companion.benefitList
 import eventViewModel.ValidInput.Companion.benefitPrice
 import eventViewModel.ValidInput.Companion.d_DayDiscount
+import eventViewModel.ValidInput.Companion.giveway
 import eventViewModel.ValidInput.Companion.inputDay
 import eventViewModel.ValidInput.Companion.result
 import eventViewModel.ValidInput.Companion.totalPrice
+import eventViewModel.ValidInput.Companion.weekEndDiscount
+import eventViewModel.ValidInput.Companion.workdayDiscount
 
 class Calculator {
-    fun originalPrice():Int{
+    fun originalPrice(){
         ValidInput.menuMap.forEach { (menuItem,quantity)->
             val item= ValidInput.menu.entries.find{ (_,items)->items.any{it.first==menuItem}}
             if(item!=null){
@@ -21,16 +25,15 @@ class Calculator {
         }
         Output().printlnBeforeBenefit()
         Output().printlnTotalPrice()
-        return totalPrice
     }
 
     fun calculateWeekEndDiscount(){
         ValidInput.menuMap.forEach { (menuItem, quantity) ->
             run {
                 val item = ValidInput.menu.entries.find { (_, items) -> items.any { it.first == menuItem } }
-                if (item?.key == "메인") {
-                    benefitPrice += ValidInput.dayDiscount * quantity
-                    ValidInput.weekEndDiscount += ValidInput.dayDiscount *quantity
+                if (item?.key == SerachingKey.MAIN.key) {
+                    benefitPrice += DiscountAmount.DAY_DISCOUNT.amount * quantity
+                    weekEndDiscount += DiscountAmount.DAY_DISCOUNT.amount *quantity
                 }
             }
         }
@@ -39,43 +42,49 @@ class Calculator {
         ValidInput.menuMap.forEach { (menuItem, quantity) ->
             run {
                 val item = ValidInput.menu.entries.find { (_, items) -> items.any { it.first == menuItem } }
-                if (item?.key == "디저트") {
-                    benefitPrice += ValidInput.dayDiscount * quantity
-                    ValidInput.workdayDisount += ValidInput.dayDiscount *quantity
+                if (item?.key == SerachingKey.DESSERT.key) {
+                    benefitPrice += DiscountAmount.DAY_DISCOUNT.amount * quantity
+                    workdayDiscount += DiscountAmount.DAY_DISCOUNT.amount *quantity
                 }
             }
         }
     }
-    fun calculateGivewayBenefit(){
-        ValidInput.giveway = Output().printlnGiveWayResult()
-        if(ValidInput.giveway){
-            benefitList.add("증정 이벤트: -25,000원")
-            benefitPrice +=25000
+    private fun giveWayChampagne(){
+        giveway = Output().printlnGiveWayResult()
+        if(giveway){
+            benefitList.add(OutputMent.GIVEWAY_MENT.message)
+            benefitPrice +=DiscountAmount.GIVE_WAY.amount
         }
-        val getStar= Output().startDays(inputDay, ValidInput.starDays)
+    }
+    private fun starDay(){
+        val getStar=Output().startDays(inputDay,SpecialDay.STAR_DAY.specialDay)
         if(getStar){
-            benefitList.add("특별 할인: -1,000원")
-            benefitPrice +=1000
+            benefitList.add(OutputMent.SPECIAL_DISCOUNT_MENT.message)
+            benefitPrice+=DiscountAmount.STAR_DAY.amount
         }
-        ValidInput.dayType = Output().checkingDayType(inputDay, ValidInput.weekEnd)
+    }
+    fun calculateGivewayBenefit(){
+        giveWayChampagne()
+        starDay()
+        ValidInput.dayType = Output().checkingDayType(inputDay,SpecialDay.WEEK_END.specialDay)
         if(ValidInput.dayType){
             calculateWeekEndDiscount()
-            if(ValidInput.weekEndDiscount !=0){
-                val formattedDiscount = String.format("주말 할인 : -%,d원", Math.abs(ValidInput.weekEndDiscount))
-                benefitList.add(formattedDiscount)
+            if(weekEndDiscount !=0){
+                val weekEndMessage=OutputMent.WEEKEND_DISCOUNT.message.format(weekEndDiscount)
+                benefitList.add(weekEndMessage)
             }
         }
         if(!ValidInput.dayType){
             calculateWorkDayDiscount()
-            if(ValidInput.workdayDisount !=0){
-                val formattedDiscount = String.format("평일 할인 : -%,d원", Math.abs(ValidInput.workdayDisount))
-                benefitList.add(formattedDiscount)
+            if(workdayDiscount !=0){
+                val workDayMessage=OutputMent.WORKDAY_DISCOUNT.message.format(workdayDiscount)
+                benefitList.add(workDayMessage)
             }
         }
         if(inputDay <=25){
             christmasDiscount()
-            val formattedDiscount = String.format("크리스마스 디데이 할인: -%,d원", Math.abs(d_DayDiscount))
-            benefitList.add(formattedDiscount)
+            val christmas_Message=OutputMent.CHRISTMAS_DISCOUNT.message.format(d_DayDiscount)
+            benefitList.add(christmas_Message)
         }
         Output().printlnBenefitList(benefitList)
     }
@@ -93,7 +102,7 @@ class Calculator {
     }
     fun resultBenefit(){
         result = totalPrice - benefitPrice
-        if(benefitList.contains("증정 이벤트: -25,000원")) {
+        if(benefitList.contains(OutputMent.GIVEWAY_MENT.message)) {
             result +=25000
         }
         Output().printlnResult()

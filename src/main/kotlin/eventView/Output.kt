@@ -7,17 +7,20 @@ import eventViewModel.ValidInput.Companion.result
 import eventViewModel.ValidInput.Companion.totalPrice
 
 class Output {
-    val validInput=ValidInput()
     companion object {
         val star="별"
         val tree="트리"
         val santa="산타"
     }
-    fun printlnOrderMenu(){
+   private fun printlnOrderMenu(){
         println(OutputMent.ORDER_MENU.message)
     }
-    fun printlnOrderMenuList(){
+    private fun printlnOrderMenuList(){
         menu.forEach{println("${it.key} ${it.value}개")}
+    }
+    fun printlnInPutMenu(){
+        Output().printlnOrderMenu()
+        Output().printlnOrderMenuList()
     }
     fun printlnBeforeBenefit(){
         println(OutputMent.BEFORE_BENEFIT.message)
@@ -59,6 +62,9 @@ class Output {
         }
         benefitList.forEach { println(it)}
         return true
+    }
+    fun printlnBenefitPreview(){
+        println(InputMent.BENEFIT_PREVIEW.message)
     }
     fun printlnAllBenefitCost(){
         println(OutputMent.BENEFIT_COST.message)

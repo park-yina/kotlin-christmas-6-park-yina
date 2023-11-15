@@ -1,10 +1,8 @@
 package eventViewModel
 
 import camp.nextstep.edu.missionutils.Console
-import eventView.DiscountPrice
 import eventView.ErrorMessage
 import eventView.Input
-import eventView.Output
 import eventView.ValidInputDatas
 
 
@@ -22,17 +20,14 @@ class ValidInput {
             "디저트" to listOf(Pair("초코케이크", 15000), Pair("아이스크림", 5000)),
             "음료" to listOf(Pair("제로콜라", 3000), Pair("레드와인", 60000), Pair("샴페인", 25000))
         )
-        val starDays= listOf(3,10,17,24,25,31)
-        val weekEnd=listOf(1,2,8,9,15,16,22,23,29,30)
         val menuMap= mutableMapOf<String,Int>()
         var totalPrice=0
         var benefitPrice=0
         var giveway=false
-        var dayDiscount=2023
         var inputDay=0
         var dayType=false
         var weekEndDiscount=0
-        var workdayDisount=0
+        var workdayDiscount=0
         var benefitList= mutableListOf<String>()
         var d_DayDiscount=0
         var result=0
@@ -66,7 +61,7 @@ class ValidInput {
             }
             val (key, value) = it.split("-")
 
-            if (input.count { item -> item.split("-")[0].equals(key) } > 1) {
+            if (input.count { item -> item.split("-")[0].equals(key) } > NumberLimit.DUPLICATE.value) {
                 throw IllegalArgumentException(ErrorMessage.DUPLICATE_MENU.message)
             }
             if (menu.none { (_, items) -> items.any { it.first == key } }) {
@@ -76,17 +71,13 @@ class ValidInput {
             if (value.toIntOrNull() == null) {
                 throw IllegalArgumentException(ErrorMessage.INVALID_MENU_FORM.message)
             }
-            if (input.all { it.split("-")[0] in menu["음료"]!!.map { it.first } }) {
+            if (input.all { it.split("-")[0] in menu[SerachingKey.DRINKING.key]!!.map { it.first } }) {
                 throw IllegalArgumentException(ErrorMessage.INVALID_MENU_FORM.message)
             }
-            if (input.sumBy { it.split("-")[1].toInt() } > 20) {
+            if (input.sumOf { it.split("-")[1].toInt() } > NumberLimit.NUMBER_LIMIT.value) {
                 throw IllegalArgumentException(ErrorMessage.OVER_MENU.message)
             }
             menuMap[key] = value.toInt()
         }
-    }
-    fun printlnInPutMenu(){
-        Output().printlnOrderMenu()
-        Output().printlnOrderMenuList()
     }
 }
