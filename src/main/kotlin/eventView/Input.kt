@@ -1,18 +1,17 @@
 package eventView
 
-import eventViewModel.Calculator
 import eventViewModel.ValidInput
 
 class Input {
     private val validInput=ValidInput()
-    private fun HelloMent(){
+    private fun helloMent(){
         println(InputMent.HELLO_USER.message)
     }
     private fun printlnVisitDate(){
         println(InputMent.READ_EXPECTED_VISIT_DATE.message)
     }
     fun dateErrorPrintln():Int{
-        HelloMent()
+        helloMent()
         printlnVisitDate()
         val date:Int
         try{

@@ -3,14 +3,14 @@ package christmas
 import eventView.Output
 import eventViewModel.Calculator
 
-class CalCulatorRun {
-    val calulator=Calculator()
+class CalculatorRun {
+    private val calculator=Calculator()
     fun run() {
         Output().printlnBenefitPreview()
         Output().printlnInPutMenu()
-        calulator.originalPrice()
-        calulator.calculateGivewayBenefit()
-        calulator.allBenefitCost()
-        calulator.resultBenefit()
+        calculator.originalPrice()
+        calculator.calculateGivewayBenefit()
+        calculator.allBenefitCost()
+        calculator.resultBenefit()
     }
 }

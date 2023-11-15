@@ -5,6 +5,7 @@ import eventView.OutputMent
 import eventViewModel.ValidInput.Companion.benefitList
 import eventViewModel.ValidInput.Companion.benefitPrice
 import eventViewModel.ValidInput.Companion.d_DayDiscount
+import eventViewModel.ValidInput.Companion.dayType
 import eventViewModel.ValidInput.Companion.giveway
 import eventViewModel.ValidInput.Companion.inputDay
 import eventViewModel.ValidInput.Companion.result
@@ -27,7 +28,7 @@ class Calculator {
         Output().printlnTotalPrice()
     }
 
-    fun calculateWeekEndDiscount(){
+    private fun calculateWeekEndDiscount(){
         ValidInput.menuMap.forEach { (menuItem, quantity) ->
             run {
                 val item = ValidInput.menu.entries.find { (_, items) -> items.any { it.first == menuItem } }
@@ -38,7 +39,7 @@ class Calculator {
             }
         }
     }
-    fun calculateWorkDayDiscount(){
+    private fun calculateWorkDayDiscount(){
         ValidInput.menuMap.forEach { (menuItem, quantity) ->
             run {
                 val item = ValidInput.menu.entries.find { (_, items) -> items.any { it.first == menuItem } }
@@ -63,38 +64,43 @@ class Calculator {
             benefitPrice+=DiscountAmount.STAR_DAY.amount
         }
     }
+    private fun processDayType(){
+        dayType=Output().checkingDayType(inputDay,SpecialDay.WEEK_END.specialDay)
+        when{
+            dayType->{
+                calculateWeekEndDiscount()
+                if(weekEndDiscount!=0){
+                    val weekEndMessage=OutputMent.WEEKEND_DISCOUNT.message.format(weekEndDiscount)
+                    benefitList.add(weekEndMessage)
+                }
+            }
+            else->{
+                calculateWorkDayDiscount()
+                if(workdayDiscount !=0){
+                    val workDayMessage=OutputMent.WORKDAY_DISCOUNT.message.format(workdayDiscount)
+                    benefitList.add(workDayMessage)
+                }
+            }
+        }
+    }
     fun calculateGivewayBenefit(){
         giveWayChampagne()
         starDay()
-        ValidInput.dayType = Output().checkingDayType(inputDay,SpecialDay.WEEK_END.specialDay)
-        if(ValidInput.dayType){
-            calculateWeekEndDiscount()
-            if(weekEndDiscount !=0){
-                val weekEndMessage=OutputMent.WEEKEND_DISCOUNT.message.format(weekEndDiscount)
-                benefitList.add(weekEndMessage)
-            }
-        }
-        if(!ValidInput.dayType){
-            calculateWorkDayDiscount()
-            if(workdayDiscount !=0){
-                val workDayMessage=OutputMent.WORKDAY_DISCOUNT.message.format(workdayDiscount)
-                benefitList.add(workDayMessage)
-            }
-        }
+        processDayType()
         if(inputDay <=25){
             christmasDiscount()
-            val christmas_Message=OutputMent.CHRISTMAS_DISCOUNT.message.format(d_DayDiscount)
-            benefitList.add(christmas_Message)
+            val christmasMessage=OutputMent.CHRISTMAS_DISCOUNT.message.format(d_DayDiscount)
+            benefitList.add(christmasMessage)
         }
         Output().printlnBenefitList(benefitList)
     }
-    fun christmasDiscount(){
-        val startPay=3400
-        var dayCount=25- inputDay
+    private fun christmasDiscount(){
+        val startPay=DiscountAmount.CHRISTMAS_START.amount
+        val dayCount=25-inputDay
         if(dayCount==0)
-            d_DayDiscount =startPay
+            d_DayDiscount=startPay
         if(dayCount!=0)
-            d_DayDiscount =startPay-(dayCount*100)
+            d_DayDiscount =startPay-(dayCount*DiscountAmount.PER_DISCOUNT.amount)
         benefitPrice += d_DayDiscount
     }
     fun allBenefitCost(){
@@ -103,7 +109,7 @@ class Calculator {
     fun resultBenefit(){
         result = totalPrice - benefitPrice
         if(benefitList.contains(OutputMent.GIVEWAY_MENT.message)) {
-            result +=25000
+            result +=DiscountAmount.GIVE_WAY.amount
         }
         Output().printlnResult()
         Output().printlnBadge()

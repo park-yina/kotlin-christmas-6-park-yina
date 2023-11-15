@@ -1,6 +1,5 @@
 package eventView
 
-import eventViewModel.ValidInput
 import eventViewModel.ValidInput.Companion.benefitPrice
 import eventViewModel.ValidInput.Companion.menu
 import eventViewModel.ValidInput.Companion.result
@@ -8,9 +7,9 @@ import eventViewModel.ValidInput.Companion.totalPrice
 
 class Output {
     companion object {
-        val star="별"
-        val tree="트리"
-        val santa="산타"
+        const val STAR="별"
+        const val TREE="트리"
+        const val SANTA="산타"
     }
    private fun printlnOrderMenu(){
         println(OutputMent.ORDER_MENU.message)
@@ -56,7 +55,7 @@ class Output {
     }
     fun printlnBenefitList(benefitList:List<String>):Boolean{
         printlnBenefitMent()
-        if(benefitList.isNullOrEmpty()){
+        if(benefitList.isEmpty()){
             println(OutputMent.NO_ONE.message)
             return false
         }
@@ -83,9 +82,9 @@ class Output {
     fun printlnBadge(){
         printlnBadgeMent()
         when{
-            benefitPrice in DiscountPrice.STAR_START.price..DiscountPrice.START_END.price ->println(star)
-            benefitPrice in DiscountPrice.TREE_START.price..DiscountPrice.TREE_END.price->println(tree)
-            benefitPrice>=DiscountPrice.SANTA_START.price->println(santa)
+            benefitPrice in DiscountPrice.STAR_START.price..DiscountPrice.START_END.price ->println(STAR)
+            benefitPrice in DiscountPrice.TREE_START.price..DiscountPrice.TREE_END.price->println(TREE)
+            benefitPrice>=DiscountPrice.SANTA_START.price->println(SANTA)
             else->println(OutputMent.NO_ONE.message)
         }
     }
