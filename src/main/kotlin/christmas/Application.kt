@@ -1,10 +1,5 @@
 package christmas
 
-import eventViewModel.ValidInput
-
 fun main() {
-    val input=eventView.Input()
-    input.dateErrorPrintln()
-    input.menuErrorPrintln()
-    CalculatorRun().run()
+    //TODO("프로그램 구현")
 }
