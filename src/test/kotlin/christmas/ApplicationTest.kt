@@ -38,12 +38,47 @@ class ApplicationTest : NsTest() {
             assertThat(output()).contains("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.")
         }
     }
+    @Test
+    fun `숫자 범위 초과 날짜 테스트`(){
+        assertSimpleTest {
+            runException("32")
+            assertThat(output()).contains("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.")
+        }
+    }
 
     @Test
     fun `주문 예외 테스트`() {
         assertSimpleTest {
             runException("3", "제로콜라-a")
             assertThat(output()).contains("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.")
+        }
+    }
+    @Test
+    fun `주문 양식 틀림`(){
+        assertSimpleTest {
+            runException("3","제로콜라a")
+            assertThat(output()).contains("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.")
+        }
+    }
+    @Test
+    fun `존재 하지 않는 메뉴 주문`(){
+        assertSimpleTest {
+            runException("5","마라탕-3")
+            assertThat(output()).contains("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.")
+        }
+    }
+    @Test
+    fun `음료로만 이루어진 주문`(){
+        assertSimpleTest {
+            runException("5","샴페인-2")
+            assertThat(output()).contains("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.")
+        }
+    }
+    @Test
+    fun `20개가 넘는 주문`(){
+        assertSimpleTest {
+            runException("10","제로콜라-19,초코케이크-1,해산물파스타-3")
+            assertThat(output()).contains("[ERROR]")
         }
     }
 
