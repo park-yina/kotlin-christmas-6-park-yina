@@ -32,7 +32,7 @@ class Output {
     }
     fun printlnGiveWayResult():Boolean{
         printlnGivewayMenu()
-        if(totalPrice>=DiscountPrice.CHAMPAGNE_FREE.price){
+        if(totalPrice>=DiscountPrice.CHANPAGNE_FREE.price){
             println(OutputMent.SERVICE_CHANPAGNE.message)
             return true
         }
