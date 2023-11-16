@@ -15,7 +15,7 @@ class Output {
         println(OutputMent.ORDER_MENU.message)
     }
     private fun printlnOrderMenuList(){
-        menu.forEach{println("${it.key} ${it.value}개")}
+        menuMap.forEach{println("${it.key} ${it.value}개")}
     }
     fun printlnInPutMenu(){
         Output().printlnOrderMenu()
