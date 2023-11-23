@@ -4,7 +4,7 @@ import eventViewModel.ValidInput
 
 fun main() {
     val input=eventView.Input()
-    input.dateErrorPrintln()
+    input.readInputDate()
     input.menuErrorPrintln()
     CalculatorRun().run()
 }
